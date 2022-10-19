@@ -1,0 +1,44 @@
+name: "Welcome"
+author: "Ferran Celades"
+category: Start
+description: This is a sample description
+value: 10
+type: oracle
+
+extra:
+    # This is a unique challenge id
+    challenge_id: challenge0
+
+# Files from the repo that will be published
+files:
+    - public/contracts/Test.sol
+
+# Tags are used to provide additional public tagging to a challenge
+#
+# tags:
+#     - web
+#     - sandbox
+#     - js
+
+# Hints are used to give players a way to buy or have suggestions. They are not
+# required but can be nice.
+# Accepts dictionaries or strings
+# hints:
+#     - {
+#         content: "This hint costs points",
+#         cost: 10
+#     }
+#     - This hint is free
+
+
+# Requirements are used to make a challenge require another challenge to be
+# solved before being available.
+# Accepts challenge names as strings or challenge IDs as integers
+# requirements:
+#     - "Warmup"
+#     - "Are you alive"
+
+
+# attempts: 5
+
+version: "0.1"

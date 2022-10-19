@@ -21,6 +21,8 @@ The `public/scripts/challenge.py` does contain a minimal example of the required
 
 If the challenge does make use of real chain data, aka forking, you can define the `RPC` and `BLOCK_NUMBER` under `public/Dockerfile`.
 
+The challenge details that will be displayed on the ctf page can be found under `challenge.yml` and should be edited acordingly.
+
 
 ## Developing
 
@@ -104,3 +106,5 @@ Deploying, checking solved, solving and verifying:
 >>> run('challenge', 'solved')
 (True, "Solved!")
 ```
+
+- Modify the `challenge.yml`

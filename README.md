@@ -2,8 +2,8 @@
 
 ## Requirements
 
-- Docker
 - Brownie
+- Docker (optional)
 
 ## Description
 
@@ -108,3 +108,15 @@ Deploying, checking solved, solving and verifying:
 ```
 
 - Modify the `challenge.yml`
+
+
+Once the challenge is fully coded it is a good idea to make sure the docker image does build and deploys the challenge successfully:
+
+```
+cd public
+docker build . -t challenge-dev
+docker run --rm challenge-dev
+```
+
+If no errors are shown the challenge is ready!
+

@@ -63,13 +63,13 @@ anvil --block-base-fee-per-gas 0 -a 10 -f $RPC --fork-block-number $BLOCK_NUMBER
 brownie console --network dev
 ```
 
-- Inside the console deploy the challenges:
+- Inside the console deploy the challenge:
 
 ```
 >>> run('challenge', 'deploy')
 ```
 
-- Verify if the challenge is solved:
+- Verify if the challenge was solved:
 
 ```
 >>> run('challenge', 'solved')

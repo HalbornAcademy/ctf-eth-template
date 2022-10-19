@@ -26,15 +26,8 @@ The challenge details that will be displayed on the ctf page can be found under 
 
 ## Developing
 
-- Add a new network on brownie:
-
-```
-brownie networks add ctf dev host="http://127.0.0.1:8545" chainid=1337
-```
-
 - Create/copy your contracts under `public/contracts`
 - Launch your `ganache-cli` or `anvil`:
-
 
 ```
 # Ganache
@@ -60,7 +53,7 @@ anvil --block-base-fee-per-gas 0 -a 10 -f $RPC --fork-block-number $BLOCK_NUMBER
 - `cd public` and run the brownie console:
 
 ```
-brownie console --network dev
+brownie console
 ```
 
 - Inside the console deploy the challenge:

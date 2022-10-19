@@ -31,7 +31,7 @@ brownie networks add ctf dev host="http://127.0.0.1:8545" chainid=1337
 ```
 
 - Create/copy your contracts under `public/contracts`
-- Lunch your `ganache-cli` or `anvil`:
+- Launch your `ganache-cli` or `anvil`:
 
 
 ```
@@ -46,7 +46,6 @@ If you need to fork a network:
 
 ```
 # Ganache
-
 ganache-cli --chain.vmErrorsOnRPCResponse true --wallet.totalAccounts 10 --hardfork istanbul --miner.blockGasLimit 12000000 --fork.url $RPC --fork.blockNumber $BLOCK_NUMBER
 
 # Anvil

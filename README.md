@@ -27,24 +27,24 @@ The challenge details that will be displayed on the ctf page can be found under 
 ## Developing
 
 - Create/copy your contracts under `public/contracts`
-- Launch your `ganache-cli` or `anvil`:
+- Launch your `ganache-cli` or `anvil`, make sure to use the same mnemonic as the server:
 
 ```
 # Ganache
-ganache-cli --chain.vmErrorsOnRPCResponse true --wallet.totalAccounts 10 --hardfork istanbul --miner.blockGasLimit 12000000
+ganache-cli --chain.vmErrorsOnRPCResponse true --wallet.totalAccounts 10 --hardfork istanbul --miner.blockGasLimit 12000000 --wallet.mnemonic "test test test test test test test test test test test junk"
 
 # Anvil
-anvil --block-base-fee-per-gas 0 -a 10
+anvil --block-base-fee-per-gas 0 -a 10 --mnemonic "test test test test test test test test test test test junk"
 ```
 
 If you need to fork a network:
 
 ```
 # Ganache
-ganache-cli --chain.vmErrorsOnRPCResponse true --wallet.totalAccounts 10 --hardfork istanbul --miner.blockGasLimit 12000000 --fork.url $RPC --fork.blockNumber $BLOCK_NUMBER
+ganache-cli --chain.vmErrorsOnRPCResponse true --wallet.totalAccounts 10 --hardfork istanbul --miner.blockGasLimit 12000000 --fork.url $RPC --fork.blockNumber $BLOCK_NUMBER --wallet.mnemonic "test test test test test test test test test test test junk"
 
 # Anvil
-anvil --block-base-fee-per-gas 0 -a 10 -f $RPC --fork-block-number $BLOCK_NUMBER
+anvil --block-base-fee-per-gas 0 -a 10 -f $RPC --fork-block-number $BLOCK_NUMBER --mnemonic "test test test test test test test test test test test junk"
 ```
 
 - If you did fork the network make sure the same information is under `public/Dockerfile`

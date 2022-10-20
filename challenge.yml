@@ -11,6 +11,8 @@ extra:
 
 # Files from the repo that will be published
 files:
+    - public/Dockerfile
+    - public/scripts/challenge.py
     - public/contracts/Test.sol
 
 # Tags are used to provide additional public tagging to a challenge

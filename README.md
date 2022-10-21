@@ -108,8 +108,10 @@ Once the challenge is fully coded it is a good idea to make sure the docker imag
 ```
 cd public
 docker build . -t challenge-dev
-docker run --rm challenge-dev
+docker run -p 8545:80 --rm challenge-dev
 ```
 
 If no errors are shown the challenge is ready!
+
+- Try to run the solve script against the `http://127.0.0.1:8545` instance created by the previous docker run.
 

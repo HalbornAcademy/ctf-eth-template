@@ -46,4 +46,7 @@ files:
 # Defualt to hidden
 state: hidden
 
+# Leave empty
+deployed_date:
+
 version: "0.1"

@@ -43,4 +43,7 @@ files:
 
 # attempts: 5
 
+# Defualt to hidden
+state: hidden
+
 version: "0.1"

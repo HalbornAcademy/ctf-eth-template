@@ -114,4 +114,5 @@ docker run -p 8545:80 --rm challenge-dev
 If no errors are shown the challenge is ready!
 
 - Try to run the solve script against the `http://127.0.0.1:8545` instance created by the previous docker run.
+- Get details with `curl http://127.0.0.1:8545/details`
 

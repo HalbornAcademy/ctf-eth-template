@@ -3,7 +3,8 @@ author: "Ferran Celades"
 category: Start
 description: This is a sample description
 value: 10
-type: oracle
+# Don't modify
+type: oracle 
 
 extra:
     # This is a unique challenge id

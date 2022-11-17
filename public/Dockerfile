@@ -5,4 +5,4 @@ ENV BLOCK_NUMBER=
 
 COPY . /root
 
-RUN brownie compile
+RUN /root/deploy.sh

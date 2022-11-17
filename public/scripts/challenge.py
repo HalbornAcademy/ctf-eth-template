@@ -2,7 +2,7 @@ from brownie import *
 
 # A method returning a list of accounts restricted to use
 # during challenge solving
-def restricted_accounts:
+def restricted_accounts():
     return [accounts[9]]
 
 # Deploys the challenge using brownie

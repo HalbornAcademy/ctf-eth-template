@@ -4,7 +4,7 @@ category: Start
 description: This is a sample description
 value: 10
 # Don't modify
-type: oracle 
+type: oracle
 
 extra:
     # This is a unique challenge id
@@ -12,10 +12,7 @@ extra:
 
 # Files from the repo that will be published
 files:
-    - public/brownie-config.yaml
-    - public/Dockerfile
-    - public/scripts/challenge.py
-    - public/contracts/Test.sol
+    - public/challenge0.zip
 
 # Tags are used to provide additional public tagging to a challenge
 #

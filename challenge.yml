@@ -12,7 +12,7 @@ extra:
 
 # Files from the repo that will be published
 files:
-    - public/challenge0.zip
+    - challenge0.zip
 
 # Tags are used to provide additional public tagging to a challenge
 #

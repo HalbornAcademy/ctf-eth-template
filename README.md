@@ -9,99 +9,87 @@
 
 To create a new challenge use this repository as a base:
 
-- The `public` folder will be copied into the challenge container and all players will have access to all files present there.
-- The `private` folder can be used to store solutions or walkthroughs.
+- It is a standard brownie project folder with `/contracts` and a default `brownie-config.yaml` config for you to modify.
+- The `scripts/private` folder can be used to store solutions or walkthroughs.
+- The challenge details that will be displayed on the ctf page can be found under `challenge.yml` and should be edited acordingly.
+- If the challenge does make use of real chain data, aka forking, you can define the information under the CONFIG variable of the `scripts/challenge.py` file.
 
+There are 2 `challenge.py` files, used to deploy and manage the challenge, one under `scripts` and the other under `scripts/private`. The former, called PUBLIC will be exposed to the player as part of the CTF challenge files. It allows to set the configuration and settings for the player node instance, the one the player will connect to.
 
-The `public/scripts/challenge.py` does contain a minimal example of the required functions to:
+> If you need private deployments or perform private runnable actions you can modify the `scripts/private/challenge.py` file instead. This file will be hidden from the player and never exposed on the CTF platform.
 
-- Deploy a new challenge
-- Check if the challenge was solved
+All functions, including runnables, defined under `challenge.py` take 3 arguments by default:
 
+```
+- deployer: Those accounts should be used to deploy the challenge, you can think of them as being
+            the "admin" accounts. They will be restricted by default, even if
+            the player is capable of obtaining the private key, sending
+            any transaction from those addresses will cause an exception on the backend.
 
-If the challenge does make use of real chain data, aka forking, you can define the `RPC` and `BLOCK_NUMBER` under `public/Dockerfile`.
+            You MUST set a MNEMONIC under scripts/private/challenge.py (CONFIG["MNEMONIC"])
+            default: 10 accounts
 
-The challenge details that will be displayed on the ctf page can be found under `challenge.yml` and should be edited acordingly.
+- player:   Those accounts are randomly generated unless specified under
+            scripts/challenge.py (CONFIG) by setting the MNEMONIC.
+            default: 10 accounts
+
+> You can set the default balance by changing the FLAGS of the CONFIG either on the PUBLIC or PRIVATE config, depending if you want different balance on the deployer accounts or the player accounts.
+
+- state:    This is a dictionary container that allows you to store anything you would require
+            in any other function, such as runnables or "solved". For example, you could be using
+            the state variable under a runnable to check for certain condition to be meet. Once this
+            condition in met you could set an entry under the state variable to some value and check
+            it under the "solved" function to display a different message, or solve the challenge.
+```
 
 
 ## Developing
 
-- Create/copy your contracts under `public/contracts`
-- Launch your `ganache-cli` or `anvil`, make sure to use the same mnemonic as the server:
+- Create/copy your contracts under `contracts` and develop your deployment scripts
+
+- Execute the following command under a separated terminal to start the development environment. This environment will run the deployment scripts and take all the configurations as the real platform would doo. Runnables are also supported and executed:
 
 ```
-# Ganache
-ganache-cli --chain.vmErrorsOnRPCResponse true --wallet.totalAccounts 10 --hardfork istanbul --miner.blockGasLimit 12000000 --wallet.mnemonic "test test test test test test test test test test test junk"
-
-# Anvil
-anvil --block-base-fee-per-gas 0 -a 10 --mnemonic "test test test test test test test test test test test junk"
+./dev.py
 ```
 
-If you need to fork a network:
+Once you see the following without any error, the dev environment is ready to play and the deployment was successful.
 
 ```
-# Ganache
-ganache-cli --chain.vmErrorsOnRPCResponse true --wallet.totalAccounts 10 --hardfork istanbul --miner.blockGasLimit 12000000 --fork.url $RPC --fork.blockNumber $BLOCK_NUMBER --wallet.mnemonic "test test test test test test test test test test test junk"
+================================
+DEPLOYMENT READY
 
-# Anvil
-anvil --block-base-fee-per-gas 0 -a 10 -f $RPC --fork-block-number $BLOCK_NUMBER --mnemonic "test test test test test test test test test test test junk"
+{
+    "Test": [
+        "0xaE5971a1b501755d2c830f59609b90CD6aa08eD7"
+    ]
+}
+
+MNEMONIC: away despair village call pipe cement banner motor tomato know pitch crime
+================================
 ```
 
-- If you did fork the network make sure the same information is under `public/Dockerfile`
+> Notice that the reported addresses are the ones the player will be given on the CTFd platform and the mnemonic is the player mnemonic.
 
-
-- `cd public` and run the brownie console:
-
-```
-brownie console
-```
-
-- Inside the console deploy the challenge:
+- Connect to `http://127.0.0.1:8545` or run `brownie console` on the same folder. (Use the player mnemonic if your RPC client does not fetch the accounts)
+- On the terminal that the `dev.py` script was executed you can check if the challenge was solved by pressing the return key: 
+    - The dev environment will take care of sending the correct state, deployment and player accounts.
 
 ```
->>> run('challenge', 'deploy')
-```
+================================
+Check solved? <RETURN>
 
-- Verify if the challenge was solved:
-
-```
->>> run('challenge', 'solved')
-(False, "Need more coins!")
-```
-
-You can create your own solution script under `public/scripts/script_name.py` and execute it under the console with:
-
-```
->>> run('script_name')
-```
-
-An example can be the following:
-
-```
-# public/scripts/solve.py
-
-from brownie import *
-
-def main():
-    a[0].transfer(Test[-1], 10)
-```
-
-> Remember to move the solution script to `private` when done
-
-
-Deploying, checking solved, solving and verifying:
-
-```
->>> run('challenge', 'deploy')
->>> run('challenge', 'solved')
-(False, "Need more coins!")
->>> run('solve')
->>> run('challenge', 'solved')
-(True, "Solved!")
+Running 'scripts/challenge.py::solved'...
+[
+    false,
+    "Need more coins!"
+]
+Check solved?
 ```
 
 - Modify the `challenge.yml`
 
+# Check container
 
 Once the challenge is fully coded it is a good idea to make sure the docker image does build and deploys the challenge successfully:
 
@@ -116,3 +104,10 @@ If no errors are shown the challenge is ready!
 - Try to run the solve script against the `http://127.0.0.1:8545` instance created by the previous docker run.
 - Get details with `curl http://127.0.0.1:8545/details`
 
+# Tricks
+
+You can disable mining by calling this method:
+
+```
+web3.provider.make_request("evm_setAutomine", [False])
+```

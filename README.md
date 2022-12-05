@@ -33,8 +33,6 @@ All functions, including runnables, defined under `challenge.py` take 3 argument
             scripts/challenge.py (CONFIG) by setting the MNEMONIC.
             default: 10 accounts
 
-> You can set the default balance by changing the FLAGS of the CONFIG either on the PUBLIC or PRIVATE config, depending if you want different balance on the deployer accounts or the player accounts.
-
 - state:    This is a dictionary container that allows you to store anything you would require
             in any other function, such as runnables or "solved". For example, you could be using
             the state variable under a runnable to check for certain condition to be meet. Once this
@@ -42,6 +40,7 @@ All functions, including runnables, defined under `challenge.py` take 3 argument
             it under the "solved" function to display a different message, or solve the challenge.
 ```
 
+> You can set the default balance by changing the FLAGS of the CONFIG either on the PUBLIC or PRIVATE config, depending if you want different balance on the deployer accounts or the player accounts.
 
 ## Developing
 

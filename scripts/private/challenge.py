@@ -51,6 +51,6 @@ def deploy(state, deployer, player):
 CONFIG = {
     'FLAGS': '', # ex: --balance 10, ...
     'MNEMONIC': 'salad wrong armed concert evolve clock alter pledge run scout person essay', # ex: salad wrong armed concert evolve clock alter pledge run scout person essay
-    # 'RUNNABLES': [], # ex: [(function, 2), (more_function, 10)] ### (function, seconds)
+    'RUNNABLES': [], # ex: [(function, 2), (more_function, 10)] ### (function, seconds)
     'RESTRICTED_RPC_METHODS': ['anvil_*', 'evm_*'] # Disables mining/sleep without exposing that information to the player
 }

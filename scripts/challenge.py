@@ -68,7 +68,7 @@ CONFIG = {
     "RPC": '', # ex: https://rpc.ankr.com/eth
     "BLOCK_NUMBER": '', # 1234567
     'FLAGS': '', # ex: --balance 10, --no-mining, ...
-    # 'MNEMONIC': '', # ex: test test test test test test test test test test test junk
+    'MNEMONIC': '', # ex: test test test test test test test test test test test junk
     'RUNNABLES': [], # ex: [(function, 2), (more_function, 10)] ### (function, seconds)
     'RESTRICTED_RPC_METHODS': ['anvil_*', 'evm_*'] # Disables mining/sleep
 }

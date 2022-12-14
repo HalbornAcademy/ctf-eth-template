@@ -22,6 +22,9 @@ def solved(state, deployer, player):
 # RPC & BLOCK_NUMBER:
 # --------------------------
 # It is used to fork from a testnet/mainnet RPC url from an specific BLOCK_NUMBER
+# ex:
+#   'RPC': 'https://rpc.ankr.com/eth'
+#   'BLOCK_NUMBER': '1234567'
 #
 # --------------------------
 # FLAGS:
@@ -30,11 +33,15 @@ def solved(state, deployer, player):
 # or disabling mining with `--no-mining`, etc
 #
 #     > These flags will affect only the player node instance
+# ex:
+#   'FLAGS': "--balance 10 --no-mining"
 #
 # --------------------------
 # MNEMONIC
 # --------------------------
 # The mnemonic used to generate the player accounts, if not specified it is randomly generated
+# ex:
+#   'MNEMONIC': 'test test test test test test test test test test test junk'
 #
 # --------------------------
 # RUNNABLES:
@@ -57,18 +64,23 @@ def solved(state, deployer, player):
 # is solved under "solved"
 #
 # --------------------------
-# RESTRICTED_RPC_METHODS
+# ALLOWED_RPC_METHODS
 # --------------------------
 #
-# Does allow to specify methods that will be restricted on the player node.
+# Does allow to specify methods that will be allowed on the player node.
+# By default the following namespaces are enabled:
+#
+#   ["web3", "eth", "net", "debug", "txpool"]
+#
 # Refer to JSON RPC and https://book.getfoundry.sh/reference/anvil/
-# Example, restrict mining: 'RESTRICTED_RPC_METHODS': ["anvil_mine", "evm_mine"]
+# ex,
+#   'ALLOWED_RPC_METHODS': ["evm_mine"] # allowing mining blocks
 
 CONFIG = {
-    "RPC": '', # ex: https://rpc.ankr.com/eth
-    "BLOCK_NUMBER": '', # 1234567
-    'FLAGS': '', # ex: --balance 10, --no-mining, ...
-    'MNEMONIC': '', # ex: test test test test test test test test test test test junk
-    'RUNNABLES': [], # ex: [(function, 2), (more_function, 10)] ### (function, seconds)
-    'RESTRICTED_RPC_METHODS': ['anvil_*', 'evm_*'] # Disables mining/sleep
+    'RPC': '',
+    'BLOCK_NUMBER': '',
+    'FLAGS': '',
+    'MNEMONIC': '',
+    'RUNNABLES': [],
+    'ALLOWED_RPC_METHODS': []
 }

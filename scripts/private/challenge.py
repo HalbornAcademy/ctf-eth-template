@@ -13,6 +13,8 @@ def deploy(state, deployer, player):
 # or disabling mining with `--no-mining`, etc
 #
 #     > These flags will affect only the deployer node instance
+# ex:
+#   'FLAGS': "--balance 10 --no-mining"
 #
 # --------------------------
 # MNEMONIC
@@ -41,16 +43,20 @@ def deploy(state, deployer, player):
 # is solved under "solved"
 #
 # --------------------------
-# RESTRICTED_RPC_METHODS
+# ALLOWED_RPC_METHODS
 # --------------------------
 #
-# Does allow to specify methods that will be restricted on the player node but without exposing that information.
+# Does allow to specify methods that will be allowed on the player node but without exposing that information.
+#
+#   ["web3", "eth", "net", "debug", "txpool"]
+#
 # Refer to JSON RPC and https://book.getfoundry.sh/reference/anvil/
-# Example, restrict mining: 'RESTRICTED_RPC_METHODS': ["anvil_mine", "evm_mine"]
+# ex,
+#   'ALLOWED_RPC_METHODS': ["evm_mine"] # allowing mining blocks
 
 CONFIG = {
-    'FLAGS': '', # ex: --balance 10, ...
+    'FLAGS': '',
     'MNEMONIC': 'salad wrong armed concert evolve clock alter pledge run scout person essay', # ex: salad wrong armed concert evolve clock alter pledge run scout person essay
-    'RUNNABLES': [], # ex: [(function, 2), (more_function, 10)] ### (function, seconds)
-    'RESTRICTED_RPC_METHODS': ['anvil_*', 'evm_*'] # Disables mining/sleep without exposing that information to the player
+    'RUNNABLES': [],
+    'ALLOWED_RPC_METHODS': []
 }

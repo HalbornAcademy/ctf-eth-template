@@ -243,7 +243,7 @@ def proxy():
 
     if not SKIP_CHECKS:
 
-        ALLOWED_NAMESPACES = ["web3", "eth", "net", "debug", "txpool"]
+        ALLOWED_NAMESPACES = ["web3", "eth", "net", "debug", "txpool", "evm_snapshot", "evm_revert"]
 
         ok = (
             any(body["method"].startswith(namespace) for namespace in ALLOWED_NAMESPACES)

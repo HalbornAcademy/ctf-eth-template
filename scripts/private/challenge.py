@@ -48,7 +48,7 @@ def deploy(state, deployer, player):
 #
 # Does allow to specify methods that will be allowed on the player node but without exposing that information.
 #
-#   ["web3", "eth", "net", "debug", "txpool"]
+#   ["web3", "eth", "net", "debug", "txpool", "evm_snapshot", "evm_revert"]
 #
 # Refer to JSON RPC and https://book.getfoundry.sh/reference/anvil/
 # ex,

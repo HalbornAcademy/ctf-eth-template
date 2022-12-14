@@ -3,7 +3,15 @@
 ## Requirements
 
 - Brownie
+- Anvil/Ganache (Anvil recommended)
 - Docker (optional)
+
+Python with the following dependencies:
+
+```
+eth-brownie
+flask
+```
 
 ## Description
 
@@ -71,20 +79,8 @@ MNEMONIC: away despair village call pipe cement banner motor tomato know pitch c
 > Notice that the reported addresses are the ones the player will be given on the CTFd platform and the mnemonic is the player mnemonic.
 
 - Connect to `http://127.0.0.1:8545` or run `brownie console` on the same folder. (Use the player mnemonic if your RPC client does not fetch the accounts)
-- On the terminal that the `dev.py` script was executed you can check if the challenge was solved by pressing the return key: 
-    - The dev environment will take care of sending the correct state, deployment and player accounts.
-
-```
-================================
-Check solved? <RETURN>
-
-Running 'scripts/challenge.py::solved'...
-[
-    false,
-    "Need more coins!"
-]
-Check solved?
-```
+- You can test if the challenge is solved by performing a `GET` request under `http://127.0.0.1:8545/solved`
+- You can get the deploy details again by performing a `GET` request under `http://127.0.0.1:8545/details`
 
 - Modify the `challenge.yml`
 

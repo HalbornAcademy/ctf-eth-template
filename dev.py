@@ -333,4 +333,3 @@ if __name__ == '__main__':
     print()
     print(f'MNEMONIC: {PLAYER_MNEMONIC}')
     print('================================')
-_BROWNIE_CONFIG

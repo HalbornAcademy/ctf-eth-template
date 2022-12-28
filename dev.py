@@ -18,8 +18,11 @@ import socket
 import json
 import requests
 import re
+import yaml
 
 from brownie.network.account import LocalAccount
+from brownie._config import _get_data_folder
+from brownie._config import CONFIG as _BROWNIE_CONFIG
 
 app = Flask(__name__)
 
@@ -28,6 +31,9 @@ INTERNAL_PLAYER_PORT = 8546
 EXTERNAL_PORT = 8545
 PLAYER_MNEMONIC = None
 SKIP_CHECKS = False
+
+CMDS = ['anvil', 'ganache-cli']
+PROXY_ID = 'proxy-challenge'
 
 PROJECT = None
 
@@ -73,7 +79,7 @@ class AnvilData:
     mnemonic: str
     rpc: str
     block: str
-    extra: str
+    flags: str
 
 
 def anvil_run(data: AnvilData):
@@ -91,8 +97,8 @@ def anvil_run(data: AnvilData):
         _args.append('--fork-block-number')
         _args.append(data.block)
 
-    if data.extra != '':
-        _args.extend(data.extra.split(' '))
+    if data.flags != '':
+        _args.extend(data.flags.split(' '))
 
     process = subprocess.Popen(
         args=_args,
@@ -116,8 +122,8 @@ def ganache_run(data: AnvilData):
         _args.append('--fork.blockNumber')
         _args.append(data.block)
 
-    if data.extra != '':
-        _args.extend(data.extra.split(' '))
+    if data.flags != '':
+        _args.extend(data.flags.split(' '))
 
     process = subprocess.Popen(
         args=_args,
@@ -133,7 +139,7 @@ def run_main():
         mnemonic=_PRIVATE_CONFIG.get('MNEMONIC'),
         rpc=_PUBLIC_CONFIG.get('RPC', ''),
         block=_PUBLIC_CONFIG.get('BLOCK_NUMBER', ''),
-        extra=_PRIVATE_CONFIG.get('extra', ''),
+        flags=_PRIVATE_CONFIG.get('FLAGS', ''),
     )
     try:
         p = anvil_run(data)
@@ -155,7 +161,7 @@ def run_player():
         mnemonic=player_mnemonic,
         rpc=f'http://127.0.0.1:{INTERNAL_PORT}',
         block='',
-        extra=_PUBLIC_CONFIG.get('extra', ''),
+        flags=_PUBLIC_CONFIG.get('FLAGS', ''),
     )
     try:
         p = anvil_run(data)
@@ -169,7 +175,12 @@ STATE = {}
 
 def deploy():
     global STATE, PROJECT, PLAYER_MNEMONIC, RESTRICTED_ACCOUNTS
-    network.connect()
+
+    try:
+        network.connect(PROXY_ID + f"-{CMDS[0]}")
+    except Exception:
+        network.connect(PROXY_ID + f"-{CMDS[1]}")
+
     PROJECT = project.load('.')
 
     STATE = {}
@@ -281,8 +292,29 @@ def proxy():
     response = Response(resp.content, resp.status_code, resp.raw.headers.items())
     return response
 
+def register_network(cmd):
+    with _get_data_folder().joinpath("network-config.yaml").open() as fp:
+        networks = yaml.safe_load(fp)
+
+    new = {
+        "name": f"Local Proxy RPC Connection for {cmd}",
+        "id": PROXY_ID + f"-{cmd}",
+        "cmd": cmd,
+        "host": f"http://0.0.0.0",
+        "cmd_settings": {
+            "port": EXTERNAL_PORT
+        }
+    }
+
+    networks["development"].append(new)
+    with _get_data_folder().joinpath("network-config.yaml").open("w") as fp:
+        yaml.dump(networks, fp)
 
 if __name__ == '__main__':
+    for cmd in CMDS:
+        if PROXY_ID + f"-{cmd}" not in _BROWNIE_CONFIG.networks:
+            register_network(cmd)
+
     threading.Thread(target=lambda: app.run(host="0.0.0.0", port=EXTERNAL_PORT, debug=False, use_reloader=False)).start()
 
     threading.Thread(target=run_main, args=[]).start()
@@ -301,3 +333,4 @@ if __name__ == '__main__':
     print()
     print(f'MNEMONIC: {PLAYER_MNEMONIC}')
     print('================================')
+_BROWNIE_CONFIG
